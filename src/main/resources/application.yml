@@ -1,0 +1,18 @@
+
+mybatis:
+  type-aliases-package: com.vip.poi.entity
+  configuration:
+    lazy-loading-enabled: true
+    aggressive-lazy-loading: false
+    lazy-load-trigger-methods:
+    - ""
+    map-underscore-to-camel-case: true
+  mapper-locations: mapers/*.xml
+
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/finalschedule?serverTimezone=UTC
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+

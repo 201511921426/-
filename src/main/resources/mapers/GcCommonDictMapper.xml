@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.vip.poi.mapper.GcCommonDictMapper">
+    <resultMap id="BaseResultMap" type="com.vip.poi.entity.GcCommonDict">
+        <!--@mbg.generated-->
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="parentId" jdbcType="INTEGER" property="parentid"/>
+        <result column="dictCode" jdbcType="CHAR" property="dictcode"/>
+        <result column="dictName" jdbcType="CHAR" property="dictname"/>
+        <result column="level" jdbcType="TINYINT" property="level"/>
+        <result column="isUsed" jdbcType="CHAR" property="isused"/>
+        <result column="isEdit" jdbcType="CHAR" property="isedit"/>
+        <result column="domainName" jdbcType="CHAR" property="domainname"/>
+    </resultMap>
+    <select id="findAll" resultMap="BaseResultMap">
+    select *
+      from gc_common_dict g
+  order by g.parentid desc;
+  </select>
+    <insert id="insert">
+        insert into gc_common_dict(
+                                    parentid,
+                                    dictcode,
+                                    dictname,
+                                    level,
+                                    isused,
+                                    isedit,
+                                    domainname
+                                    )
+             value (1,'1','1',1,'1','1','12388')
+            ;
+    </insert>
+    <select id="queryAll" resultType="int">
+        select count(*)
+          from gc_common_dict;
+    </select>
+    <select id="findAllByLimit" resultMap="BaseResultMap">
+        select *
+          from gc_common_dict g
+          limit #{index},#{size};
+    </select>
+</mapper>
