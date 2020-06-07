@@ -144,11 +144,8 @@ public class PortUtils {
 
     /**
      * 读取excel文件，并把读取到的数据封装到clazz中
-     *
-     * @param path
-     *            文件路径
-     * @param clazz
-     *            实体类
+     * @param path 文件路径
+     * @param clazz 实体类
      * @return 返回clazz集合
      */
     public  <T extends Object> List<T> readExcelFile(String path, Class<T> clazz) {
@@ -232,13 +229,9 @@ public class PortUtils {
 
     /**
      * 设置属性值
-     *
-     * @param obj
-     *            操作对象
-     * @param f
-     *            对象属性
-     * @param cell
-     *            excel单元格
+     * @param obj 操作对象
+     * @param f 对象属性
+     * @param cell excel单元格
      */
     private  void setFieldValue(Object obj, Field f, Workbook wookbook, Cell cell) {
         try {
@@ -268,7 +261,7 @@ public class PortUtils {
     }
 
     /**
-     * 对excel 2007处理
+     * 对excel 2007处理,优化处理采用SXSSFWorkbook效率更快，不采用默认的XSSFWorkbook
      */
     private  Workbook xlsx(InputStream is) {
         try {
@@ -283,7 +276,6 @@ public class PortUtils {
 
     /**
      * 创建单元格
-     *
      * @param row
      * @param c
      * @param cellValue

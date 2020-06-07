@@ -42,4 +42,9 @@ public interface Constants {
     */
     public static final int NUM_5000000 = 5000000;
 
+    /*
+     * 路径分隔符
+     */
+    public static final String SEPARATOR = "/";
+
 }

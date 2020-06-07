@@ -6,6 +6,8 @@ import com.vip.poi.service.PortService;
 import com.vip.poi.util.CopyFile;
 import com.vip.poi.util.PortUtils;
 import com.vip.poi.util.ZipUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -35,17 +37,19 @@ public class PortServiceImpl implements PortService {
     @Resource
     CopyFile copyFile;
 
+    Logger logger = LoggerFactory.getLogger(PortServiceImpl.class);
+
     /**
-     *@fetures 业务层逻辑处理 导出execl表格
-     *@param path
-     *@return 对象列表
+     *@fetures 导出execl表格
+     *@param path 路径, dir 文件夹名称
+     *@return
      *@throws Exception
      */
     @Override
     public void QueryAllToXls(String path,String dir)throws Exception {
         //查询数据库数据总量
         int count = gcCommonDictMapper.queryAll();
-        //当数据库要导出的数据量大于5000000条时进行分页查询
+        //判断数据数据总量是否大于1000000条，是，进行分页查询
         if (count > NUM_1000000){
             //分页查询，每次查出1000000条数据
             int size = NUM_100000;
@@ -58,7 +62,7 @@ public class PortServiceImpl implements PortService {
                 Date currentime = new Date();
                 SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
                 String format = formatter.format(currentime);
-                //dao层操作数据库
+                //dao层操作数据库，查询出来的数据封装进list中
                 List<GcCommonDict> list = gcCommonDictMapper.findAllByLimit(startIndex,size);
                 //下一次从数据库里面查数据的起始索引
                 startIndex = startIndex + size + NUM_1;
@@ -75,18 +79,18 @@ public class PortServiceImpl implements PortService {
                         //下一次截断的起始位置
                         index=index+num;
                         //文件名：时间+i，格式是.xlsx
-                        String path_1 = path + "/" + format +i +".xlsx";
+                        String path_1 = path + SEPARATOR + format +i +".xlsx";
                         //调用outExcelFile方法生成execl表格放到path_1路径下
                         portUtils.outExcelFile(list1,path_1);
                     }
                     //一个文件数据装载量为50000，如果最后list数据量不足50000，继续装载有可能导致索引越界，以下是处理数据余量
                     List<GcCommonDict> list2 = list.subList(index, list.size());
                     //调用outExcelFile方法生成execl表格放到path_2路径下
-                    String path_2 = path+"/"+ format + (quotient-NUM_1)+".xlsx";
+                    String path_2 = path + SEPARATOR + format + (quotient-NUM_1)+".xlsx";
                     portUtils.outExcelFile(list2,path_2);
                 }else {
                     //调式控制台输出，上线调整为日志打印输出
-                    System.out.println("空列表");
+                   logger.info("空列表");
                 }
             }
         }else {
@@ -98,7 +102,7 @@ public class PortServiceImpl implements PortService {
             List<GcCommonDict> list = gcCommonDictMapper.findAll();
             if (list.size()>NUM_0){
                 //单个文件要导入的数据量
-                int size = NUM_500000;
+                int size = NUM_50000;
                 //创建数据导入索引
                 int index = NUM_0;
                 //循环次数
@@ -109,22 +113,22 @@ public class PortServiceImpl implements PortService {
                     //下一次截断的起始位置
                     index=index+size;
                     //文件名：时间+i，格式是.xls
-                    String path_1 = path + "/" + format +i +".xlsx";
+                    String path_1 = path + SEPARATOR + format +i +".xlsx";
                     //调用outExcelFile方法生成execl表格放到path_1路径下
                     portUtils.outExcelFile(list1,path_1);
                 }
                 //一个文件数据装载量为50000，如果最后list数据量不足50000，继续装载有可能导致索引越界，以下是处理数据余量
                 List<GcCommonDict> list2 = list.subList(index, count);
                 //调用outExcelFile方法生成execl表格放到path_2路径下
-                String path_2 = path+"/"+ format + (quotient-NUM_1)+".xlsx";
+                String path_2 = path + SEPARATOR + format + (quotient-NUM_1)+".xlsx";
                 portUtils.outExcelFile(list2,path_2);
             }else {
                 //调式控制台输出，上线调整为日志打印输出
-                System.out.println("空列表");
+                logger.info("空列表");
             }
         }
         //传入路径path与你想要新建的文件夹名dir，用于拼接一条新的路径
-        String path_3= path+"/"+dir;
+        String path_3= path+SEPARATOR+dir;
         File file = new File(path_3);
         if (!file.exists()){
             file.mkdir();
@@ -142,8 +146,8 @@ public class PortServiceImpl implements PortService {
 
     /**
      *@fetures 业务层逻辑处理 导出csv文件
-     *@param path
-     *@return 对象列表
+     *@param path 路径, dir 文件夹名称
+     *@return
      *@throws Exception
      */
     @Override
@@ -159,18 +163,18 @@ public class PortServiceImpl implements PortService {
             //查询数据库数据总量
             int count = gcCommonDictMapper.queryAll();
             //单个文件要导入的数据量，单个execl表格最多只能导入六万多条数据
-            int size = 50000;
+            int size = NUM_50000;
             //创建数据导入索引
-            int index = 0;
+            int index = NUM_0;
             //循环次数
-            int quotient = count / size + (count % size > 0 ? 1 : 0);
+            int quotient = count / size + (count % size > NUM_0 ? NUM_1 : NUM_0);
             for (int i = 0;i < quotient-1;i++){
                 //因为数据量巨大，单个表格无法装下，通过截断获取一部分数据
                 List<GcCommonDict> list1 = list.subList(index, index + size-1);
                 //下一次截断的起始位置
                 index=index+size;
                 //文件名：时间+i，格式是.xls
-                String path_1 = path + "/" + format +i +".csv";
+                String path_1 = path + SEPARATOR + format +i +".csv";
                 //调用outExcelFile方法生成execl表格放到path_1路径下
                 portUtils.outExcelFile(list1,path_1);
             }
@@ -197,7 +201,6 @@ public class PortServiceImpl implements PortService {
         deleteDir(path);
         deleteDir(path_3);
     }
-
 }
 
 

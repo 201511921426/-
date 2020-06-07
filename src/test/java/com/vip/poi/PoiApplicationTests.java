@@ -1,5 +1,6 @@
 package com.vip.poi;
 
+import com.alibaba.fastjson.JSONObject;
 import com.vip.poi.mapper.GcCommonDictMapper;
 import com.vip.poi.service.PortService;
 import com.vip.poi.util.ZipUtils;
@@ -88,8 +89,13 @@ public class PoiApplicationTests {
                     fos.close();
                 }
             }
-
-        }
+    @Test
+    public void test4(){
+        JSONObject jsonObject = new JSONObject();
+        String s = jsonObject.getString("path");
+        System.out.println(s);
+    }
+}
 
 
 
