@@ -21,21 +21,21 @@ public class ExportController {
     PortService portService;
 
     @RequestMapping("/xls")
-    public Object portXls(String path,String dir)throws Exception{
+    public Object portXls(String path, String dir) throws Exception {
         //开始时间
         Long startTime = new Date(System.currentTimeMillis()).getTime();
         //传入的目录要完整，比如:"F:/test/"
-        portService.QueryAllToXls(path,dir);
+        portService.QueryAllToXls(path, dir);
         //结束时间
         Long endtTime = new Date(System.currentTimeMillis()).getTime();
 
-        return "导出并压缩成功，请在传入的参数路径下查看文件,一共用时：" + (endtTime-startTime)/1000 ;
+        return "导出并压缩成功，请在传入的参数路径下查看文件,一共用时：" + (endtTime - startTime) / 1000;
     }
 
     @RequestMapping("/csv")
-    public String portCsv(String path,String dir)throws Exception{
+    public String portCsv(String path, String dir) throws Exception {
         //传入的目录要完整，比如:"F:/test/"
-        portService.QueryAllToCvs(path,dir);
+        portService.QueryAllToCvs(path, dir);
         return "导出并压缩成功，请在传入的参数路径下查看文件！";
     }
 

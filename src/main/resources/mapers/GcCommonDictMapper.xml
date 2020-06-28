@@ -13,30 +13,30 @@
         <result column="domainName" jdbcType="CHAR" property="domainname"/>
     </resultMap>
     <select id="findAll" resultMap="BaseResultMap">
-    select *
-      from gc_common_dict g
-  order by g.parentid desc;
-  </select>
+        select *
+        from gc_common_dict g
+        order by g.parentid desc;
+    </select>
     <insert id="insert">
         insert into gc_common_dict(
-                                    parentid,
-                                    dictcode,
-                                    dictname,
-                                    level,
-                                    isused,
-                                    isedit,
-                                    domainname
-                                    )
-             value (1,'1','1',1,'1','1','12388')
-            ;
+        parentid,
+        dictcode,
+        dictname,
+        level,
+        isused,
+        isedit,
+        domainname
+        )
+        value (1,'1','1',1,'1','1','12388')
+        ;
     </insert>
     <select id="queryAll" resultType="int">
         select count(*)
-          from gc_common_dict;
+        from gc_common_dict;
     </select>
     <select id="findAllByLimit" resultMap="BaseResultMap">
         select *
-          from gc_common_dict g
-          limit #{index},#{size};
+        from gc_common_dict g
+        limit #{index},#{size};
     </select>
 </mapper>

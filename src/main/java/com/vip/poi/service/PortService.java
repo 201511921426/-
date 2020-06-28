@@ -9,18 +9,18 @@ package com.vip.poi.service;
 public interface PortService {
 
     /**
-     *@fetures 查询列表方法
-     *@param path
-     *@return
-     *@throws Exception
+     * @param path
+     * @return
+     * @throws Exception
+     * @fetures 查询列表方法
      */
-    void QueryAllToXls(String path,String dir) throws Exception;
+    void QueryAllToXls(String path, String dir) throws Exception;
 
     /**
-     *@fetures 查询列表方法
-     *@param path
-     *@return
-     *@throws Exception
+     * @param path
+     * @return
+     * @throws Exception
+     * @fetures 查询列表方法
      */
-    void QueryAllToCvs(String path,String dir) throws Exception;
+    void QueryAllToCvs(String path, String dir) throws Exception;
 }

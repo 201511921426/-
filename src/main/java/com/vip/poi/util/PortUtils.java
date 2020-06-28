@@ -27,6 +27,7 @@ public class PortUtils {
 
     /**
      * 输出excel文件
+     *
      * @param data 数据集合
      * @param path 输出路径
      */
@@ -144,11 +145,12 @@ public class PortUtils {
 
     /**
      * 读取excel文件，并把读取到的数据封装到clazz中
-     * @param path 文件路径
+     *
+     * @param path  文件路径
      * @param clazz 实体类
      * @return 返回clazz集合
      */
-    public  <T extends Object> List<T> readExcelFile(String path, Class<T> clazz) {
+    public <T extends Object> List<T> readExcelFile(String path, Class<T> clazz) {
 
         // 存储excel数据
         List<T> list = new ArrayList<>();
@@ -229,16 +231,17 @@ public class PortUtils {
 
     /**
      * 设置属性值
-     * @param obj 操作对象
-     * @param f 对象属性
+     *
+     * @param obj  操作对象
+     * @param f    对象属性
      * @param cell excel单元格
      */
-    private  void setFieldValue(Object obj, Field f, Workbook wookbook, Cell cell) {
+    private void setFieldValue(Object obj, Field f, Workbook wookbook, Cell cell) {
         try {
             if (f.getType() == int.class || f.getType() == Integer.class) {
                 f.setInt(obj, getInt(cell));
             } else if (f.getType() == Double.class || f.getType() == double.class) {
-                f.setDouble(obj,getDouble(null, cell));
+                f.setDouble(obj, getDouble(null, cell));
             } else {
                 f.set(obj, getString(cell));
             }
@@ -263,7 +266,7 @@ public class PortUtils {
     /**
      * 对excel 2007处理,优化处理采用SXSSFWorkbook效率更快，不采用默认的XSSFWorkbook
      */
-    private  Workbook xlsx(InputStream is) {
+    private Workbook xlsx(InputStream is) {
         try {
             // 得到工作簿
 //            return new XSSFWorkbook(is);
@@ -276,12 +279,13 @@ public class PortUtils {
 
     /**
      * 创建单元格
+     *
      * @param row
      * @param c
      * @param cellValue
      * @param style
      */
-    private  void creCell(Row row, int c, String cellValue, CellStyle style) {
+    private void creCell(Row row, int c, String cellValue, CellStyle style) {
         Cell cell = row.createCell(c);
         cell.setCellValue(cellValue);
         cell.setCellStyle(style);

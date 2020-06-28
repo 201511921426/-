@@ -15,12 +15,14 @@ public @interface MyAnnotation {
 
     /**
      * 列索引
+     *
      * @return int
      */
     public int columnIndex() default 0;
 
     /**
      * 列名
+     *
      * @return string
      */
     public String columnName() default "";

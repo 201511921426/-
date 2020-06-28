@@ -1,11 +1,10 @@
-
 mybatis:
   type-aliases-package: com.vip.poi.entity
   configuration:
     lazy-loading-enabled: true
     aggressive-lazy-loading: false
     lazy-load-trigger-methods:
-    - ""
+      - ""
     map-underscore-to-camel-case: true
   mapper-locations: mapers/*.xml
 

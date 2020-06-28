@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.vip.poi.mapper.BlogMapper">
+  <resultMap id="BaseResultMap" type="com.vip.poi.entity.Blog">
+    <!--@mbg.generated-->
+    <!--@Table blog-->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="content" jdbcType="LONGVARCHAR" property="content" />
+  </resultMap>
+  <insert id="insert">
+  insert into blog(title,content) value(#{title},#{content})
+</insert>
+<select id="selectById" resultMap="BaseResultMap">
+select * from blog where id = #{id};
+</select>
+</mapper>
